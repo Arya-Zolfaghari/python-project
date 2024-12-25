@@ -2,6 +2,8 @@ import sqlite3
 import tkinter as tk
 from tkinter import messagebox
 
+from click import command
+
 conn = sqlite3.connect('bookstor.db')
 cursor = conn.cursor()
 
@@ -31,7 +33,7 @@ class Bookstor:
     def __init__(self, root):
         self.root = root
         self.root.title('Bookstor')
-        self.root.geometry('800x800')
+        self.root.geometry('800x900')
         self.root.resizable(False, False)
 
         self.add_book_name = tk.Entry(root, bg='white', fg='black', font=('Helvetica', 15))
@@ -60,12 +62,16 @@ class Bookstor:
         self.h_name_book = tk.Entry(root, bg='white', fg='black', font=('Helvetica', 15))
         self.h_name_book.pack(pady=10)
 
-        h_add_button = tk.Button(root, bg="darkblue", fg="white", font=('Helvetica', 15), text= 'got book', command=self.give)
+        h_add_button = tk.Button(root, bg="darkblue", fg="white", font=('Helvetica', 15), text= 'give book', command=self.give)
         h_add_button.pack(pady=30)
 
-        h_remove_button = tk.Button(root, bg="red", fg="white", font=('Helvetica', 15), text= 'give book', command=self.remove)
+        h_remove_button = tk.Button(root, bg="red", fg="white", font=('Helvetica', 15), text= 'returned', command=self.remove)
         h_remove_button.pack(pady=30)
 
+
+
+        reserved_books = tk.Button(root,bg='black', fg='white', font=('Helvetica', 15), text = 'reserved books' , command = self.show)
+        reserved_books.pack(pady=30)
 
 
 
@@ -219,18 +225,19 @@ class Bookstor:
             conn.commit()
             messagebox.showinfo('Success', 'Book was updated successfully.')
 
+    def show(self):
+        cursor.execute('SELECT FNAME, LNAME, BOOK FROM humans')
+        result = cursor.fetchall()
 
+        if result:
+            message = "The list of reserved books is:\n\n"
+            for record in result:
+                fname, lname, book = record
+                message += f"{fname} {lname} - {book}\n"
 
-
-
-
-
-
-
-
-
-
-
+            messagebox.showinfo('Reserved Books', message)
+        else:
+            messagebox.showinfo('Reserved Books', 'No books have been reserved yet.')
 
 
 if __name__ == "__main__":
