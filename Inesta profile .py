@@ -8,7 +8,7 @@ def get_image():
     try:
         # Initialize Instaloader and log in
         L = instaloader.Instaloader()
-        L.login("mohammad_hossein.py", "mamad1390")
+        L.login("YOUR USER NAME ", "YOUR PASSWORD ")
         
         # Get profile details
         profile = instaloader.Profile.from_username(L.context, username.get())
@@ -62,3 +62,4 @@ error_label.pack()
 
 # Run the app
 window.mainloop()
+
