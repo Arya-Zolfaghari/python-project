@@ -41,9 +41,10 @@ async def respond(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(response_text)
 
 def main():
-    application = Application.builder().token("7610797174:AAHVnlOYH4i6c9r0yYytKW_pJDjRjKvTTiw").build()
+    application = Application.builder().token("YOUR TOKEN ").build()
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, respond))
     application.run_polling()
 
 if __name__ == '__main__':
     main()
+
